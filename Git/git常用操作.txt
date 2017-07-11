@@ -1,0 +1,111 @@
+git init			把所在的这个目录变成Git可以管理的仓库
+git add <file>			提交更新和提交修改%【注意，此时能够被提交的文件必然在当前路径下，即父路径并不包含，要提交不属于当前路径下的文件需要先进入到要提交文件的父级路径才行】%
+git commit -m "<discrib>"	提交文件到仓库
+git commit -a -m "<discrib>"	跳过git add，直接将所有已经跟踪过得文件暂存起来，提交到仓库
+
+cat <file>			查看文件file内容
+git status			查看当前仓库的状态
+git diff			查看详细的修改内容，特指工作区和暂存区的比较
+git diff <commit id> -- <file>	查看当前工作的file与commit id的那个版本下这个文件的差别
+git diff <commit id>		查看当前工作区与commit id的那个版本下所有文件的差别
+git diff --cached		特指查看暂存区和分支的比较
+git diff --staged		特指查看暂存区和分支的比较，Git1.6.1以上可用
+
+git log				rem查看提交日志
+git log --pretty=online		查看提交日志并显示commit id(版本号),--pretty=online是让信息整齐显示
+git log --pretty=online --abbrev-commit
+	查看提交日志，只显示commit id和说明
+git reset --hard HEAD^		回退到上一个版本
+git reset --hard HEAD~100	回退到往上100个的版本
+git reset --hard <commit id>	回到与commit id相同的那个版本
+git reflog			查看之前版本变化(提交、回到)的每一次命令，其中可以看到commit id
+
+git mv <file1> <file2>		将文件file1改名为file2
+
+git checkout -- <file>		让file这个文件回到最近一次git commit或git add时的状态
+git reset HEAD <file>		让file这个文件的暂存区清空
+
+rm <file>			删除file这个文件
+git rm <file>			从版本库中删除该文件，等于执行rm <file>后又执行git add <file>
+git rm <file> -f		如果file删除之前修改过且已经放到暂存区域，则必须使用强制删除选项-f，防止误删还未添加到快照的数据，数据不能恢复
+git rm --cached <file/dir/...>	把文件从Git仓库中删除，即从暂存区删除，但仍然希望保留在当前工作目录中，又即取消跟踪，类似于.gitignore的作用
+
+git remote add origin git@github.com:<github account>/<github repository>.git
+	将本地仓库与github上account这个账户下的repository仓库(即当前路径下的这个仓库)进行关联
+
+git clone git@github.com:<github account>/<github repository>.git 【<filename>】  
+	将github上account这个账户下的repository仓库复制到当前路径下的这个文件夹中，并进行关联，【可以添加filename字段对生成的文件夹进行重命名】
+
+git push -u origin <branch>	第一次推送branch分支的所有内容
+git push origin <branch>	推送branch分支最新修改
+git push origin <branch1>:<branch2>
+	提交本地分支branch1作为远程的branch2分支
+git push origin :<branch2>	删除远程的branch2分支，但本地的branch2分支还在本地保留
+git push origin HEAD --force	强迫删除当前版本之后的提交历史，即清空之后的提交历史
+
+git branch			查看当前分支
+git branch <dev>		创建dev分支
+git checkout <dev>		切换分支
+git checkout -b <dev>		创建dev分支，然后切换到这个分支，等于执行git branch <dev>后又执行git checkout <dev>
+git checkout -b <branch1> <branch2>
+	以branch2分支为基础，创建branch1分支，然后切换到这个分支
+git checkout --track <dev>	创建dev分支，并与远程的dev分支链接，然后切换到这个分支，仅在未链接时可以使用
+git branch -d <dev>		删除dev分支bran
+git branch -D <feature>		常用于feature分支，丢弃一个没有被合并过的分支，强行删除
+git log --graph			查看分支合并图
+git branch -a			查看所有分支
+git branch -r			查看远程分支
+git checkout -b <dev> origin/<dev>
+	checkout远程的dev分支，在本地起名为dev分支，并切换到本地的dev分支
+git pull origin <dev>		从远程获取最新版本dev并merge到本地同名dev
+git fetch origin <branch1>:<branch2>
+	从远程origin的branch1分支下载最新的版本到本地的branch2分支上，一般操作是，后面再将branch2这个分支与相应的分支进行比较，之后再合并
+git fetch origin <dev>	
+	从远程获取最新版本branch到本地临时库origin/dev上，一般操作是，后面git log -p dev..origin/dev进行差异比较，之后再进行合并
+
+git merge -m "<discrib>" <dev>
+	合并这个dev分支到当前分支【用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息】
+git merge --no-ff -m "<discrib>" <dev>
+	合并这个dev分支到当前分支【禁用Fast forward模式，即普通模式合并，合并后的历史有分支，能看出来曾经做过合并】
+
+git stash			储存当前内容
+git stash apply			恢复之前储存的内容
+git stash drop			删除stash储存的内容
+git stash pop			恢复的同时也删除stash内容
+git stash list			查看stash列表
+
+git pull			合并本地当前分支和与之链接的远程分支，如果不存在与之链接的远程分支，将会报错，需要先建立链接
+git branch --set-upstream <branch1> origin/<branch2>
+	将本地分支branch1与远程分支branch2建立链接
+
+git tag				查看所有标签，按字母排序
+git tag <tagname>		给本分支打上tagname标签
+git tag <tagname> <commit id>	给相应commit id打上tagname标签
+git show <tagname>		查看相应的标签信息
+git tag -a <tagname> -m <discrib> <commit id>
+	创建带有说明的标签
+
+git tag -d <tagname>		删除tagname标签
+git push origin <tagname>	推送指定标签到远程
+git push origin --tags		一次性推送全部尚未推送到远程的本地标签
+git push origin :refs/tags/<tagname>
+	在先使用git tag -d <tagname>删除一个本地标签的前提下，再使用这个可以删除一个远程标签
+
+git config --global alias.<abbrev> <command>
+	配置全局别名，配置的文件在用户主目录下的一个隐藏文件.gitconfig中
+git config alias.<abbrev> <command>
+	配置仓库别名，配置的文件在仓库的.git/config中
+
+git remote 			列出已经存在的远程分支
+git remote -v			列出已经存在的远程分支的详细信息
+git remote show <remote>	列出指定的远程分支的详细信息，其中remote的值是git remote结果中的一个远程分支
+
+git rebase <branch>		
+	假设当前分支为master，取出branch分支上的修改，把master分支作为基础，重绘branch分支，然后把修改在master分支上重演一遍，生成新的一条具备修改同时基于master分支的branch分支，称之为衍合。注意其中master分支未变化，一般使用时，再切换到merge，使用merge合并branch即将修改放置在了master上，但没有出现分叉结构。
+git rebase --onto branch1 branch2 branch3
+	先执行git checkout branch3；然后找出branch3分支、branch2分支的共同祖先之后的差异；再把brach1作为基础，重绘branch3分支，把那些差异在branch1上重演一遍，生成新的一条具备差异同时基于branch1的branch3分支。注意其中branch1分支、branch2分支未变化，一般使用时，再切换到merge，使用merge合并branch1和branch3即将差异放置在了branch1上，但没有出现分叉结构。
+
+git revert <commit id>		是生成一个新的提交来撤销某次提交，此次提交之前的commit都会被保留
+git reset <commit id>		是回到某次提交，提交及之前的commit都会被保留，但是此次之后的修改都会被退回到暂存区
+
+git rebase -i origin/master	打开commit处理界面
