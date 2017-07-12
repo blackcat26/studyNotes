@@ -11,10 +11,20 @@ git diff <commit id>		查看当前工作区与commit id的那个版本下所有文件的差别
 git diff --cached		特指查看暂存区和分支的比较
 git diff --staged		特指查看暂存区和分支的比较，Git1.6.1以上可用
 
-git log				rem查看提交日志
+git log				查看提交日志
 git log --pretty=online		查看提交日志并显示commit id(版本号),--pretty=online是让信息整齐显示
+git log -p -<number>		查看提交日志，显示每次提交的内容详细差异，并只显示近<number>条数据
+git log --stat			查看提交日志，并显示简略的统计信息
+git log --pretty=format:"%h - %an, %ar : %s"
+	查看提交日志，按常用的格式显示:提交对象的简短哈希字串、作者的名字、作者修订日期(按多久以前的方式显示)、提交说明【更多格式元素可以查阅pretty=format常用的选项】
+
 git log --pretty=online --abbrev-commit
-	查看提交日志，只显示commit id和说明
+	查看提交日志，按分支图的方式显示，只输出commit id和说明
+git log --oneline --decorate --graph --all
+	查看提交日志，按分支图的方式显示，输出提交历史、各分支的指向以及项目的分支分叉情况
+
+git commit --amend		将上次commit与这次暂存区的修改进行合并重新改写上次的commit，并且能编辑commit的提交信息
+
 git reset --hard HEAD^		回退到上一个版本
 git reset --hard HEAD~100	回退到往上100个的版本
 git reset --hard <commit id>	回到与commit id相同的那个版本
@@ -33,8 +43,8 @@ git rm --cached <file/dir/...>	把文件从Git仓库中删除，即从暂存区删除，但仍然希望
 git remote add origin git@github.com:<github account>/<github repository>.git
 	将本地仓库与github上account这个账户下的repository仓库(即当前路径下的这个仓库)进行关联
 
-git clone git@github.com:<github account>/<github repository>.git 【<filename>】  
-	将github上account这个账户下的repository仓库复制到当前路径下的这个文件夹中，并进行关联，【可以添加filename字段对生成的文件夹进行重命名】
+git clone 【-<remoteName>】 git@github.com:<github account>/<github repository>.git 【<filename>】  
+	将github上account这个账户下的repository仓库复制到当前路径下的这个文件夹中，并进行关联，【可以添加filename字段对生成的文件夹进行重命名】，默认的远程分支名为origin，【可以自己设定远程分支名remoteName】
 
 git push -u origin <branch>	第一次推送branch分支的所有内容
 git push origin <branch>	推送branch分支最新修改
@@ -49,14 +59,21 @@ git checkout <dev>		切换分支
 git checkout -b <dev>		创建dev分支，然后切换到这个分支，等于执行git branch <dev>后又执行git checkout <dev>
 git checkout -b <branch1> <branch2>
 	以branch2分支为基础，创建branch1分支，然后切换到这个分支
-git checkout --track <dev>	创建dev分支，并与远程的dev分支链接，然后切换到这个分支，仅在未链接时可以使用
-git branch -d <dev>		删除dev分支bran
+git checkout --track <origin/dev>
+	创建dev分支，并与远程的dev分支链接，然后切换到这个分支，仅在未链接时可以使用，等同于git checkout -b <dev> <origin/dev>，这是一种简化写法
+git branch -u <origin/dev>	设定或者修改正在跟踪的上游远程分支
+git branch --merge		仅显示已经合并到当前分支的分支
+git branch --no-merge		仅显示尚未合并到当前分支的分支
+git branch -d <dev>		删除dev分支
 git branch -D <feature>		常用于feature分支，丢弃一个没有被合并过的分支，强行删除
+git push origin --delete <dev>	删除origin/dev分支，即删除远程服务器origin上的dev分支
 git log --graph			查看分支合并图
 git branch -a			查看所有分支
 git branch -r			查看远程分支
+git branch -vv			查看本地分支，并包含更多信息，如每一个分支正在跟踪哪个远程分支与本地分支是否领先、落后等，注意此时的远程分支数据来源于本地缓存的服务器数据，不一定是最新的服务器数据，如果想要与真实最新的远程比较，应该在使用之前抓取所有远程仓库，用git --all
 git checkout -b <dev> origin/<dev>
 	checkout远程的dev分支，在本地起名为dev分支，并切换到本地的dev分支
+
 git pull origin <dev>		从远程获取最新版本dev并merge到本地同名dev
 git fetch origin <branch1>:<branch2>
 	从远程origin的branch1分支下载最新的版本到本地的branch2分支上，一般操作是，后面再将branch2这个分支与相应的分支进行比较，之后再合并
@@ -79,7 +96,7 @@ git branch --set-upstream <branch1> origin/<branch2>
 	将本地分支branch1与远程分支branch2建立链接
 
 git tag				查看所有标签，按字母排序
-git tag <tagname>		给本分支打上tagname标签
+git tag <tagname>		给本分支当前的commit打上tagname标签
 git tag <tagname> <commit id>	给相应commit id打上tagname标签
 git show <tagname>		查看相应的标签信息
 git tag -a <tagname> -m <discrib> <commit id>
