@@ -55,11 +55,11 @@ git remote add <remoteName> <url>			½«±¾µØ²Ö¿âÓë<url>ÉÏµÄrepo½øÐÐ¹ØÁª£¬²¢½«¹ØÁªµ
 git clone ¡¾-<remoteName>¡¿ <url> ¡¾<filename>¡¿  	½«<url>µÄrepo²Ö¿â¸´ÖÆµ½µ±Ç°Â·¾¶ÏÂµÄÕâ¸öÎÄ¼þ¼ÐÖÐ£¬²¢½øÐÐ¹ØÁª£¬¡¾¿ÉÒÔÌí¼Ó<filename>×Ö¶Î¶ÔÉú³ÉµÄÎÄ¼þ¼Ð½øÐÐÖØÃüÃû¡¿£¬Ä¬ÈÏµÄÔ¶³Ì²Ö¿âÃûÎªorigin£¬¡¾¿ÉÒÔ×Ô¼ºÉè¶¨Ô¶³Ì²Ö¿âÃû<remoteName>¡¿
 
 
-git push -u <rope> <br>					µÚÒ»´ÎÍÆËÍ<br>·ÖÖ§µÄËùÓÐÄÚÈÝ£¬µ½Ô¶³Ì²Ö¿â<rope>
-git push <rope> <br>					ÍÆËÍ<br>·ÖÖ§×îÐÂÐÞ¸Ä£¬µ½Ô¶³Ì²Ö¿â<rope>
-git push <rope> <br1>:<br2>				Ìá½»±¾µØ·ÖÖ§<br1>×÷ÎªÔ¶³Ì²Ö¿â<rope>µÄ<br2>·ÖÖ§
-git push <rope> :<br2>					É¾³ýÔ¶³Ì²Ö¿â<rope>µÄ<br2>·ÖÖ§£¬µ«±¾µØµÄ<br2>·ÖÖ§»¹ÔÚ±¾µØ±£Áô
-git push <rope> HEAD --force				Ç¿ÆÈÉ¾³ýÔ¶³Ì²Ö¿â<rope>µ±Ç°°æ±¾Ö®ºóµÄcommitÀúÊ·£¬°üÀ¨±¾µØ²Ö¿â£¬¼´Çå¿ÕÖ®ºóµÄcommitÀúÊ·
+git push -u <repo> <br>					µÚÒ»´ÎÍÆËÍ<br>·ÖÖ§µÄËùÓÐÄÚÈÝ£¬µ½Ô¶³Ì²Ö¿â<repo>
+git push <repo> <br>					ÍÆËÍ<br>·ÖÖ§×îÐÂÐÞ¸Ä£¬µ½Ô¶³Ì²Ö¿â<repo>
+git push <repo> <br1>:<br2>				Ìá½»±¾µØ·ÖÖ§<br1>×÷ÎªÔ¶³Ì²Ö¿â<repo>µÄ<br2>·ÖÖ§
+git push <repo> :<br2>					É¾³ýÔ¶³Ì²Ö¿â<repo>µÄ<br2>·ÖÖ§£¬µ«±¾µØµÄ<br2>·ÖÖ§»¹ÔÚ±¾µØ±£Áô
+git push <repo> HEAD --force				Ç¿ÆÈÉ¾³ýÔ¶³Ì²Ö¿â<repo>µ±Ç°°æ±¾Ö®ºóµÄcommitÀúÊ·£¬°üÀ¨±¾µØ²Ö¿â£¬¼´Çå¿ÕÖ®ºóµÄcommitÀúÊ·
 
 
 git branch						²é¿´µ±Ç°·ÖÖ§
@@ -75,7 +75,7 @@ git checkout <dev>					ÇÐ»»µ½<dev>·ÖÖ§
 git checkout -b <dev>					´´½¨<dev>·ÖÖ§£¬È»ºóÇÐ»»µ½Õâ¸ö·ÖÖ§£¬µÈÓÚÖ´ÐÐgit branch <dev>ºóÓÖÖ´ÐÐgit checkout <dev>
 git checkout -b <br1> <br2>				ÒÔ<br2>·ÖÖ§Îª»ù´¡£¬´´½¨<br1>·ÖÖ§£¬È»ºóÇÐ»»µ½Õâ¸ö·ÖÖ§
 git checkout -b <dev> <repo>/<dev>			checkoutÔ¶³ÌµÄ<dev>·ÖÖ§£¬ÔÚ±¾µØÉú³ÉÍ¬ÃûµÄ<dev>·ÖÖ§£¬²¢ÇÐ»»µ½±¾µØµÄ<dev>·ÖÖ§
-git checkout --track <repo>/<dev>			´´½¨±¾µØÍ¬Ãû<dev>·ÖÖ§£¬²¢ÓëÔ¶³Ì²Ö¿â<repo>µÄ<dev>·ÖÖ§Á´½Ó£¬È»ºóÇÐ»»µ½Õâ¸ö·ÖÖ§£¬½öÔÚÔ¶³Ì²Ö¿â<repo>ÏÂ<dev>´æÔÚÇÒ±¾µØ<dev>Î´Á´½ÓÊ±¿ÉÒÔÊ¹ÓÃ£¬µÈÍ¬ÓÚgit checkout -b <dev> <rope>/<dev>£¬ÕâÊÇÒ»ÖÖ¼ò»¯Ð´·¨
+git checkout --track <repo>/<dev>			´´½¨±¾µØÍ¬Ãû<dev>·ÖÖ§£¬²¢ÓëÔ¶³Ì²Ö¿â<repo>µÄ<dev>·ÖÖ§Á´½Ó£¬È»ºóÇÐ»»µ½Õâ¸ö·ÖÖ§£¬½öÔÚÔ¶³Ì²Ö¿â<repo>ÏÂ<dev>´æÔÚÇÒ±¾µØ<dev>Î´Á´½ÓÊ±¿ÉÒÔÊ¹ÓÃ£¬µÈÍ¬ÓÚgit checkout -b <dev> <repo>/<dev>£¬ÕâÊÇÒ»ÖÖ¼ò»¯Ð´·¨
 git branch -u <repo>/<dev>				Éè¶¨»òÕßÐÞ¸Äµ±Ç°·ÖÖ§ÕýÔÚ¸ú×ÙµÄÉÏÓÎÔ¶³Ì·ÖÖ§Îª<repo>/<dev>
 git branch --set-upstream <br1> <repo>/<br2>		Éè¶¨»òÕßÐÞ¸Äµ±Ç°·ÖÖ§<br1>ÕýÔÚ¸ú×ÙµÄÉÏÓÎÔ¶³Ì·ÖÖ§Îª<repo>/<br2>
 
