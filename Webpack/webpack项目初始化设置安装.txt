@@ -1,0 +1,37 @@
+全局安装webpack，是否已经全局安装可以使用webpack -v测试
+npm install webpack -g
+
+在项目文件夹根目录下，新建一个package.json依赖管理文件
+npm init
+
+安装项目下的webpack，保证webpack.config.js中能引入并使用webpack
+npm install webpack --save-dev
+
+
+其他所需的项目依赖如下：
+
+1>react使用依赖项
+npm install --save-dev react react-dom react-router
+
+2>babel使用依赖项、es2015使用依赖项、react的es6写法使用依赖项
+npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react
+
+3>redux使用依赖项
+npm install --save-dev redux react-redux redux-thunk
+
+4>style样式加载器依赖项、css使用依赖项、sass使用依赖项、2种对图片url处理策略的使用依赖项
+npm install --save-dev style-loader css-loader sass-loader url-loader file-loader
+
+5>Express(一个简洁而灵活的 node.js Web应用框架)使用依赖项
+npm install --save-dev webpack-dev-server
+
+创建webpack.config.js文件并按需求设置
+
+
+可选择其他所需的依赖如下：
+
+1>HtmlWebpackPlugin插件（简化HTML文件创建的插件）
+npm install html-webpack-plugin --save-dev
+
+2>OpenBrowserWebpackPlugin插件（在webpack 启动成功后会打开浏览器的插件）
+npm install open-browser-webpack-plugin --save-dev
