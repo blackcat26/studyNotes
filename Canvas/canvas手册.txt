@@ -1,0 +1,55 @@
+1、css控制canvers元素宽高有可能不准确、扭曲等现象，而在元素width、height属性中设置宽高可避免异常；
+
+2、支持canvers的浏览器会忽略canvers标签中的内容，而不支持canvers的浏览器会展现canvers标签中的内容，那么有一个好主意，我们可以在canvers标签中放入一个img元素，当canvers标签不被浏览器接受时显示其静态图片，使内容不突兀、适应性号；
+
+3、canvers元素自带的.getContext()方法不仅是用来设定canvers元素上下文渲染模式，同时还可以在js中判断浏览器是否支持canvers，通过使用!!<canversElement>.getContext检测；
+
+4、绘制矩形：	.fillRect(px,py,w,h)	--填充矩形区域
+		.strokeRect(px,py,w,h)	--绘制矩形边框
+		.clearRect(px,py,w,h)	--去除矩形区域，背景为透明
+
+5、绘制路径：	.beginPath()		--开启新的路径列表，清空原有的路径列表。在调用beginPath()或canvas刚建的时候，第一条路径构造命令通常被视为moveTo()，所以干脆养成在这句之后使用.moveTo(px,py)设置路径起始点
+		.closePath()		--创建一条从当前点到起始点的路径，闭合路径之后，又重新回到上下文中
+		.stroke()		--用线描绘路径列表，但是不会自动闭合路径
+		.fill()			--自动闭合路径列表中的路径，然后填充闭合图形
+
+		.moveTo(px,py)		--移动笔触，到指定的坐标
+		.lineTo(px,py)		--线，绘制一条从当前点到指定坐标的路径
+		.arc(px,py,radius,startAngle,endAngle,antclockwise)
+					--圆弧(或圆)，绘制一条以px,py为圆心，radius为半径，按照anticlockwise给定的方向(默认false,即顺时针)的从startAngle开始到endAngle结束的圆弧(或圆)
+		.arcTo(x1,y1,x2,y2,radius)
+					--根据给定的控制点和半径画一段圆弧，圆弧为P1P0射线和P0P2射线的切线
+
+		.quadraticCurveTo(x1,y1,x2,y2,radius)
+					--二次贝塞尔曲线，P2为结束点，P1为控制点，曲线的凸出在P1那面
+		.bezierCurveTo(x1,y1,x2,y2,x3,y3)
+					--三次贝塞尔曲线，P1为控制点1，P2为控制点2，P3为结束点
+
+		.rect(x,y,width,height)	--绘制一个左上角坐标为(x,y)，宽高为width和height的矩形，但是注意，执行该方法会使当前笔触自动重置会默认坐标到(0,0)
+
+6、Path2D对象：	new Path2D()		--会返回一个空的Path对象
+		new Path2D(path)	--克隆Path对象
+		new Path2D(d)		--从SVG建立Path对象
+
+7、色彩：	.fillStyle		--设置图形的填充颜色
+		.strokeStyle		--设置图形的轮廓颜色
+
+		.globalAlpha		--设置透明度，注意透明叠加情形
+
+8、线型：	.lineWidth		--设置线条宽度，数值，不能带单位
+		.lineCap		--设置线条末端样式
+						----butt	线段末端以方形结束
+						----round	线段末端以圆形结束
+						----square	线段末端以方形结束，但是增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
+		.lineJoin		--设置线条与线条间接合处的样式
+						----miter	默认值，填充一个额外的菱形区域
+						----round	填充一个额外的圆弧拐角
+						----bevel	把原先菱形区域的尖角切去，就是这种样式
+		.miterLimit		--限制当两条线相交时交接处最大长度，所谓交接处长度是指线条交接处内角顶点到外角顶点的长度
+		.setLineDash(<arr>)	--设置当前虚线样式，其中arr为数组，其中奇项为实线长，偶项为虚线长，整个为虚线的虚实循环规律
+		.getLineDash()		--返回一个包含当前虚线样式，长度为非负偶数的数组
+		.lineDashOffset		--设置虚线样式的起始偏移量，相当于把虚线往左水平拉扯了一段距离，数值，不能带单位
+
+	注意：
+		1）lineWidth，注意半渲染的情况，如此时线宽设为1px，我们要画一条(3,1)到(3,5)的直线，此时线段的中心点确实是沿着这条直线的，可线的左右两边都只占了0.5px，此时会发生半渲染现象，将(2,y)到(2.5,y)这种格子填充实际笔触一半的颜色，所以为了避免，此时会设计将直线的横坐标设为2.5或3.5来规避，注意这种现象可以确保图形在经过缩放等变换后保持看上去蛮好、清晰；
+		2）
