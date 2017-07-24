@@ -1,100 +1,47 @@
-git init						把所在的这个目录变成Git可以管理的仓库
-git add <file>						提交更新和提交修改【注意，此时能够被提交的文件必然在当前路径下，即父路径等并不包含，要提交不属于当前路径下的文件需要先进入到要提交文件的父级路径才行】
-git commit -m "<discribe>"				提交文件到仓库
 git commit -am "<discribe>"				跳过git add，直接将所有已经跟踪过的文件暂存起来，提交到仓库
 
-
 cat <file>						查看文件<file>内容
-git status						查看当前仓库的状态
-git diff						查看详细的修改内容，特指工作区和暂存区的比较
 git diff <commitId> -- <file>				查看当前工作的file与<commitId>的那个版本下这个文件的差别
 git diff <commitId>					查看当前工作区与<commitId>的那个版本下所有文件的差别
 git diff --cached					特指查看暂存区和分支的比较
 git diff --staged					特指查看暂存区和分支的比较，Git1.6.1以上可用
 
-
-git log							查看提交日志
-git log --pretty=online					查看提交日志并显示commitId(版本号)，--pretty=online是让信息整齐显示
 git log -p -<number>					查看提交日志，显示每次提交的内容详细差异，并只显示近<number>条数据
 git log --stat						查看提交日志，并显示简略的统计信息
 git log --pretty=format:"%h - %an, %ar : %s"		查看提交日志，按常用的格式显示:提交对象的简短哈希字串、作者的名字、作者修订日期(按多久以前的方式显示)、提交说明【更多格式元素可以查阅pretty=format常用的选项】
 
-
-git log --graph						查看提交日志，按分支图的方式显示
-git log --pretty=online --abbrev-commit			查看提交日志，按分支图的方式显示，只输出commitId和说明
 git log --oneline --decorate --graph --all		查看提交日志，按分支图的方式显示，输出提交历史、各分支的指向以及项目的分支分叉情况
-
 
 git commit --amend					将上次commit与这次暂存区的修改进行合并，重新改写上次的commit，并且能编辑commit的提交信息
 
-
-git reset --hard HEAD^					回退到上一个版本
-git reset --hard HEAD~100				回退到往上100个的版本
-git reset --hard <commitId>				回到与<commitId>相同的那个版本
-git reflog						查看之前版本变化(提交、回到)的每一次命令，其中可以看到commitId
-
-
 git mv <file1> <file2>					将文件file1改名为file2
-
 
 git checkout -- <file>					让<file>这个文件回到最近一次git commit或git add时的状态
 git reset HEAD <file>					让<file>这个文件的暂存区清空
 
-
-rm <file>						删除<file>这个文件
-git rm <file>						从版本库中删除该文件，等于执行rm <file>后又执行git add <file>
-git rm <file> -f					如果file删除之前修改过且已经放到暂存区域，则必须使用强制删除选项-f，防止误删还未添加到快照的数据，数据不能恢复
 git rm --cached <file|dir|...>				把文件或文件夹从Git仓库中删除，即从暂存区删除，但仍然希望保留在当前工作目录中，又即取消跟踪，类似于.gitignore的作用
-
 
 git remote add <remoteName> git@github.com:<account>/<repo>.git			将本地仓库(即当前路径下的这个仓库)与github上<account>这个账户下的<repo>仓库进行关联，并将关联的远程仓库命名为<remoteName>，一般默认为origin
 git clone 【-<remoteName>】 git@github.com:<account>/<repo>.git 【<filename>】  将github上<account>这个账户下的<repo>仓库复制到当前路径下的这个文件夹中，并进行关联，【可以添加<filename>字段对生成的文件夹进行重命名】，默认的远程仓库名为origin，【可以自己设定远程仓库名<remoteName>】
 
-
-git remote add <remoteName> <url>			将本地仓库与<url>上的repo进行关联，并将关联的远程仓库命名为<remoteName>
-git clone 【-<remoteName>】 <url> 【<filename>】  	将<url>的repo仓库复制到当前路径下的这个文件夹中，并进行关联，【可以添加<filename>字段对生成的文件夹进行重命名】，默认的远程仓库名为origin，【可以自己设定远程仓库名<remoteName>】
-
-
-git push -u <repo> <br>					第一次推送<br>分支的所有内容，到远程仓库<repo>
-git push <repo> <br>					推送<br>分支最新修改，到远程仓库<repo>
-git push <repo> <br1>:<br2>				提交本地分支<br1>作为远程仓库<repo>的<br2>分支
-git push <repo> :<br2>					删除远程仓库<repo>的<br2>分支，但本地的<br2>分支还在本地保留
 git push <repo> HEAD --force				强迫删除远程仓库<repo>当前版本之后的commit历史，包括本地仓库，即清空之后的commit历史
 
-
-git branch						查看当前分支
-git branch -a						查看所有分支
 git branch -r						查看远程分支
 git branch -vv						查看本地分支，并包含更多信息，如每一个分支正在跟踪哪个远程分支与本地分支是否领先、落后等，注意此时的远程分支数据来源于本地缓存的服务器数据，不一定是最新的服务器数据，如果想要与真实最新的远程比较，应该在使用之前抓取所有远程仓库，用git fetch --all
 git branch --merge					仅显示已经合并到当前分支的分支
 git branch --no-merge					仅显示尚未合并到当前分支的分支
 
-
-git branch <dev>					创建<dev>分支
-git checkout <dev>					切换到<dev>分支
-git checkout -b <dev>					创建<dev>分支，然后切换到这个分支，等于执行git branch <dev>后又执行git checkout <dev>
-git checkout -b <br1> <br2>				以<br2>分支为基础，创建<br1>分支，然后切换到这个分支
-git checkout -b <dev> <repo>/<dev>			checkout远程的<dev>分支，在本地生成同名的<dev>分支，并切换到本地的<dev>分支
 git checkout --track <repo>/<dev>			创建本地同名<dev>分支，并与远程仓库<repo>的<dev>分支链接，然后切换到这个分支，仅在远程仓库<repo>下<dev>存在且本地<dev>未链接时可以使用，等同于git checkout -b <dev> <repo>/<dev>，这是一种简化写法
 git branch -u <repo>/<dev>				设定或者修改当前分支正在跟踪的上游远程分支为<repo>/<dev>
 git branch --set-upstream <br1> <repo>/<br2>		设定或者修改当前分支<br1>正在跟踪的上游远程分支为<repo>/<br2>
 
-
-git branch -d <dev>					删除<dev>分支
 git branch -D <feature>					常用于<feature>分支，丢弃一个没有被合并过的分支，强行删除
 git push <repo> --delete <dev>				删除<repo>/<dev>分支，即删除远程服务器<repo>上的<dev>分支
 
-
-git pull						合并本地当前分支和与之链接的远程分支，如果不存在与之链接的远程分支，将会报错，需要先建立当前分支与远程分支的跟踪
 git pull <repo> <dev>					从远程<repo>获取最新版本<dev>并merge到本地同名<dev>
 git fetch <repo> <br1>:<br2>				从远程<repo>的<br1>分支下载最新的版本到本地的<br2>分支上，原先<br2>分支为新创建的空分支，一般操作是，后面再将<br2>这个分支与相应的分支进行比较，之后再合并
 git fetch <repo> <dev>					从远程<repo>获取最新版本<dev>到本地临时库<repo>/<dev>上，一般操作是，后面git log -p <dev>..<repo>/<dev>进行差异比较，之后再进行合并
 git fetch <repo>					获取远程<repo>上所有分支，作为本地缓存的服务器数据
-
-
-git merge -m "<discribe>" <dev>				合并这个<dev>分支到当前分支【用Fast forward模式，但这种模式下，删除合并分支后，当前分支会丢掉与合并分支做过合并的操作记录】
-git merge --no-ff -m "<discribe>" <dev>			合并这个<dev>分支到当前分支【禁用Fast forward模式，即普通模式合并，合并后的历史有分支，能看出来曾经做过合并】
-
 
 git stash						储存当前内容
 git stash apply						恢复之前储存的内容
@@ -102,10 +49,6 @@ git stash drop						删除stash储存的内容
 git stash pop						恢复的同时也删除stash内容
 git stash list						查看stash列表
 
-
-git tag							查看所有标签，按字母排序
-git tag <tagname>					给当前分支最近一次commit的<commitId>打上<tagname>标签
-git tag <tagname> <commitId>				给相应<commitId>打上<tagname>标签
 git show <tagname>					查看相应的标签信息
 git tag -a <tagname> -m <discribe> <commitId>		创建带有说明的标签
 
