@@ -107,7 +107,7 @@ git tag							查看所有标签，按字母排序
 git tag <tagname>					给当前分支最近一次commit的<commitId>打上<tagname>标签
 git tag <tagname> <commitId>				给相应<commitId>打上<tagname>标签
 git show <tagname>					查看相应的标签信息
-git tag -a <tagname> -m <discribe> <commitId>		创建带有说明的标签
+git tag -a <tagname> -m "<discribe>" <commitId>		创建带有说明的标签
 
 
 git tag -d <tagname>					删除<tagname>标签
