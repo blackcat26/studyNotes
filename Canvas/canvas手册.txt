@@ -1,8 +1,10 @@
-1、css控制canvers元素宽高有可能不准确、扭曲等现象，而在元素width、height属性中设置宽高可避免异常；
+1、css控制canvas元素宽高有可能不准确、扭曲等现象，而在元素width、height属性中设置宽高可避免异常；
 
-2、支持canvers的浏览器会忽略canvers标签中的内容，而不支持canvers的浏览器会展现canvers标签中的内容，那么有一个好主意，我们可以在canvers标签中放入一个img元素，当canvers标签不被浏览器接受时显示其静态图片，使内容不突兀、适应性号；
 
-3、canvers元素自带的.getContext()方法不仅是用来设定canvers元素上下文渲染模式，同时还可以在js中判断浏览器是否支持canvers，通过使用!!<canversElement>.getContext检测；
+2、支持canvas的浏览器会忽略canvas标签中的内容，而不支持canvas的浏览器会展现canvas标签中的内容，那么有一个好主意，我们可以在canvas标签中放入一个img元素，当canvas标签不被浏览器接受时显示其静态图片，使内容不突兀、适应性号；
+
+
+3、canvas元素自带的.getContext()方法不仅是用来设定canvas元素上下文渲染模式，同时还可以在js中判断浏览器是否支持canvas，通过使用!!<canvasElement>.getContext检测；
 
 4、绘制矩形：	.fillRect(px,py,w,h)	--填充矩形区域
 		.strokeRect(px,py,w,h)	--绘制矩形边框
@@ -20,7 +22,7 @@
 		.arcTo(x1,y1,x2,y2,radius)
 					--根据给定的控制点和半径画一段圆弧，圆弧为P1P0射线和P0P2射线的切线
 
-		.quadraticCurveTo(x1,y1,x2,y2,radius)
+		.quadraticCurveTo(x1,y1,x2,y2)
 					--二次贝塞尔曲线，P2为结束点，P1为控制点，曲线的凸出在P1那面
 		.bezierCurveTo(x1,y1,x2,y2,x3,y3)
 					--三次贝塞尔曲线，P1为控制点1，P2为控制点2，P3为结束点
@@ -61,4 +63,22 @@
 		<gradientObj>.addColorStop(position,color)
 					--给渐变添加色标，第一参数position是一个0.0与1.0之间的数值，表示渐变中颜色所在的相对位置
 
-	额外注意：渐变的设定是可以用变量存储下来，然后设置给色彩样式来使用。
+	额外注意：渐变的设定是先用变量存储下来，然后赋值给色彩样式来使用的。
+
+10、图案样式：
+		.createPattern(image,type)
+					--设置图案样式，其中image参数可以是img对象的引用或者另一个canvas对象
+	额外注意：
+		1）与drawImage有点不同，使用该方法需要确认其参数中image对象已经装载完毕，否则图案可能会效果不对，所以使用时可以配合img对象的onload事件来确保图片加载完毕；
+		2）其使用与渐变一样，先存储在变量中，再赋值给色彩样式来使用。
+
+11、阴影
+		.shadowOffsetX		--设定阴影在X轴的延伸距离
+		.shadowOffsetY		--设定阴影在Y轴的延伸距离
+		.shadowBlur		--设定阴影的模糊程度，其数值并不跟像素数量挂钩，也不受变换矩阵的影响，默认值为0
+		.shadowColor		--设定阴影的颜色，默认是全透明的黑色
+
+12、填充规则		
+		.fill(【"nonzero"|"evenodd"】)			
+					--自动闭合路径列表中的路径，然后填充闭合图形，其默认填充规则是"nonzero"
+	补充说明：
