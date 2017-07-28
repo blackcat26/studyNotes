@@ -63,22 +63,85 @@
 		<gradientObj>.addColorStop(position,color)
 					--给渐变添加色标，第一参数position是一个0.0与1.0之间的数值，表示渐变中颜色所在的相对位置
 
-	额外注意：渐变的设定是先用变量存储下来，然后赋值给色彩样式来使用的。
+	额外注意：
+		渐变的设定是先用变量存储下来，然后赋值给色彩样式来使用的。
 
 10、图案样式：
 		.createPattern(image,type)
-					--设置图案样式，其中image参数可以是img对象的引用或者另一个canvas对象
+					--设置图案样式，其中image参数可以是img对象的引用或者另一个canvas对象；type只能是repeat|repeat-x|repeat-y|no-repeat
 	额外注意：
 		1）与drawImage有点不同，使用该方法需要确认其参数中image对象已经装载完毕，否则图案可能会效果不对，所以使用时可以配合img对象的onload事件来确保图片加载完毕；
 		2）其使用与渐变一样，先存储在变量中，再赋值给色彩样式来使用。
 
-11、阴影
+11、阴影：
 		.shadowOffsetX		--设定阴影在X轴的延伸距离
 		.shadowOffsetY		--设定阴影在Y轴的延伸距离
 		.shadowBlur		--设定阴影的模糊程度，其数值并不跟像素数量挂钩，也不受变换矩阵的影响，默认值为0
 		.shadowColor		--设定阴影的颜色，默认是全透明的黑色
 
-12、填充规则		
+12、填充规则：		
 		.fill(【"nonzero"|"evenodd"】)			
 					--自动闭合路径列表中的路径，然后填充闭合图形，其默认填充规则是"nonzero"
 	补充说明：
+		1）"nonzero"指"非零环绕数规则"：
+			即在平面内的任何一点P，引出一条射线，注意不要经过多边形的顶点，然后将多边形的边矢量化，规定当射线从多边形的边穿过，经过顺时针绘制的边线加1，则经过逆时针绘制的边线减1，最终结果累加，如果为0，则点P在多边的外面；如果非0则点P在多边形的内部。 
+		2）"evenodd"指")奇-偶规则"：
+			即在平面内的任何一点P，引出一条射线，注意不要经过多边形的顶点，若与该射线相交的多边形边的数目为奇数，则p是多边形内部点，否则是外部点。
+	额外注意：
+		同一闭合图形分别在运用"非零环绕数规则"和"奇-偶规则"时，可能得到的结果不同。
+
+13、绘制文本：
+		.fillText(text,x,y【,maxWidth】)
+					--设置填充文本，将text设置到指定的位置，并可以设置maxWidth来控制文本最大长度
+		.strokeText(text,x,y【,maxWidth】)
+					--设置填充文本框，将text以文本框的形式设置到指定的位置，可以设置maxWidth来控制最大长度
+
+		.font			--设置文本样式，其值与css font属性设置一致，包括书写顺序和必要设置，为字符串，中间用空格间隔
+						----【font-style】	文字斜体设置
+							------normal
+							------italic		按文字的斜体样式
+							------oblique		按文字倾斜的样子
+						----【font-variant】	文字小写字母变体设置
+							------normal
+							------small-caps	文字的小写字母转换成大写字母，但其转换后的大小仍小于原本就是大写的那些字母
+						----【font-weight】	文字的粗细设置
+						----font-size		文字的大小
+						----【line-height】	行高
+						----font-family		文字的种类
+
+		.textAlign		--设置文本对齐规则，其值可设为start/end/left/right/center，默认为left
+
+		.textBaseline		--设置文本基线
+						----top		  文本基线是em方框的顶端
+						----hanging	  文本基线是悬挂基线
+						----middle	  文本基线是em方框的正中
+						----alphabetic    默认，文本基线是普通的字母基线
+						----ideographic   文本基线是表意基线
+						----bottom        文本基线是em方框的底端
+
+		.direction		--设置文本方向，其值可设为ltr/rtl/inhert
+
+		.measureText(text)	--返回一个text设定的TextMetrics对象
+							
+14、使用图像：
+		1）引入图像到canvas里需要两步基本操作，
+			1> 获得一个图片的源
+			2> 使用drawImage()函数将图片绘制到画布上
+
+		2）canvas的API可以使用的图片源有，
+			1> HTMLImageElement	这些图片是由Image()函数构造出来的，或者任何<img>元素，可以通过 document.images集合 或 document.getElementsByTagName()方法 或 document.getElementById()来获取所需的 image 元素
+			2> HTMLVideoElement	用一个HMTL的<video>元素作为图片源，可以从视频中抓取当前帧作为一个图像，即使视频被设为不可见
+			3> HTMLCanvasElement	使用另一个<canvas>元素作为图片源，可以通过用 document.getElementsByTagName 或 document.getElementById 方法来获取其它 canvas 元素
+			4> ImageBitmap		一种高性能的位图
+
+		3）注意，若调用drawImage时，图片没有装载完，那什么都不会发生，在一些旧的浏览器中可能会抛出异常，因此，应该用load事件来保证不会在加载完毕之前使用这个图片。
+
+		4）简单使用	
+			.drawImage(image,x,y)    --将指定图片放置到指定位置
+
+		5）缩放使用	
+			.drawImage(image,x,y,width,height)    --将指定图片缩放为相应大小后放置到指定位置
+
+		6）切片使用
+			.drawIamge(image,sx,sy,swidth,sheight,dx,dy,dWidth,dHeight)    --将指定图片先切片，后放置，前4个是定义图像源的切片位置和大小，后4个则是定义切片的目标显示位置和大小
+							
