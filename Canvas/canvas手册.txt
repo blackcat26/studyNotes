@@ -1,16 +1,20 @@
 1、css控制canvas元素宽高有可能不准确、扭曲等现象，而在元素width、height属性中设置宽高可避免异常；
 
 
-2、支持canvas的浏览器会忽略canvas标签中的内容，而不支持canvas的浏览器会展现canvas标签中的内容，那么有一个好主意，我们可以在canvas标签中放入一个img元素，当canvas标签不被浏览器接受时显示其静态图片，使内容不突兀、适应性号；
+2、支持canvas的浏览器会忽略canvas标签中的内容，而不支持canvas的浏览器会展现canvas标签中的内容，那么有一个好主意，我们可以在canvas标签中放入一个img元素，当canvas标签不被浏览器接受时显示其静态图片，使内容不突兀、适应性好；
 
 
 3、canvas元素自带的.getContext()方法不仅是用来设定canvas元素上下文渲染模式，同时还可以在js中判断浏览器是否支持canvas，通过使用!!<canvasElement>.getContext检测；
 
-4、绘制矩形：	.fillRect(px,py,w,h)	--填充矩形区域
+
+4、绘制矩形：	
+		.fillRect(px,py,w,h)	--填充矩形区域
 		.strokeRect(px,py,w,h)	--绘制矩形边框
 		.clearRect(px,py,w,h)	--去除矩形区域，背景为透明
 
-5、绘制路径：	.beginPath()		--开启新的路径列表，清空原有的路径列表。在调用beginPath()或canvas刚建的时候，第一条路径构造命令通常被视为moveTo()，所以干脆养成在这句之后使用.moveTo(px,py)设置路径起始点
+
+5、绘制路径：	
+		.beginPath()		--开启新的路径列表，清空原有的路径列表。在调用beginPath()或canvas刚建的时候，第一条路径构造命令通常被视为moveTo()，所以干脆养成在这句之后使用.moveTo(px,py)设置路径起始点
 		.closePath()		--创建一条从当前点到起始点的路径，闭合路径之后，又重新回到上下文中
 		.stroke()		--用线描绘路径列表，但是不会自动闭合路径
 		.fill()			--自动闭合路径列表中的路径，然后填充闭合图形
@@ -29,16 +33,23 @@
 
 		.rect(x,y,width,height)	--绘制一个左上角坐标为(x,y)，宽高为width和height的矩形，但是注意，执行该方法会使当前笔触自动重置会默认坐标到(0,0)
 
-6、Path2D对象：	new Path2D()		--会返回一个空的Path对象
+		.isPointInPath(x,y)	--如果指定的点位于当前路径中，则返回true，否则返回false
+
+6、Path2D对象：	
+		new Path2D()		--会返回一个空的Path对象
 		new Path2D(path)	--克隆Path对象
 		new Path2D(d)		--从SVG建立Path对象
 
-7、色彩：	.fillStyle		--设置图形的填充颜色
+
+7、色彩：	
+		.fillStyle		--设置图形的填充颜色
 		.strokeStyle		--设置图形的轮廓颜色
 
 		.globalAlpha		--设置透明度，注意透明叠加情形
 
-8、线型：	.lineWidth		--设置线条宽度，数值，不能带单位
+
+8、线型：	
+		.lineWidth		--设置线条宽度，数值，不能带单位
 		.lineCap		--设置线条末端样式
 						----butt	线段末端以方形结束
 						----round	线段末端以圆形结束，但是增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
@@ -56,7 +67,9 @@
 		1）lineWidth，注意半渲染的情况，如此时线宽设为1px，我们要画一条(3,1)到(3,5)的直线，此时线段的中心点确实是沿着这条直线的，可线的左右两边都只占了0.5px，此时会发生半渲染现象，将(2,y)到(2.5,y)这种格子填充实际笔触一半的颜色，所以为了避免，此时会设计将直线的横坐标设为2.5或3.5来规避，注意这种现象可以确保图形在经过缩放等变换后保持看上去蛮好、清晰；
 		2）lineCap，默认的butt是与设计终点相同，round和square比设计终点要多出一个宽度为lineWidth值，高度为lineWidth值一半的区域。
 
-9、渐变：	.createLinearGradient(x1,y1,x2,y2)
+
+9、渐变：	
+		.createLinearGradient(x1,y1,x2,y2)
 					--线性渐变，方向从P1到P2
 		.createRadialGradient(x1,y1,radius1,x2,y2,radius2)
 					--圆型渐变，方向从第一个圆向第二个圆
@@ -66,6 +79,7 @@
 	额外注意：
 		渐变的设定是先用变量存储下来，然后赋值给色彩样式来使用的。
 
+
 10、图案样式：
 		.createPattern(image,type)
 					--设置图案样式，其中image参数可以是img对象的引用或者另一个canvas对象；type只能是repeat|repeat-x|repeat-y|no-repeat
@@ -73,11 +87,13 @@
 		1）与drawImage有点不同，使用该方法需要确认其参数中image对象已经装载完毕，否则图案可能会效果不对，所以使用时可以配合img对象的onload事件来确保图片加载完毕；
 		2）其使用与渐变一样，先存储在变量中，再赋值给色彩样式来使用。
 
+
 11、阴影：
 		.shadowOffsetX		--设定阴影在X轴的延伸距离
 		.shadowOffsetY		--设定阴影在Y轴的延伸距离
 		.shadowBlur		--设定阴影的模糊程度，其数值并不跟像素数量挂钩，也不受变换矩阵的影响，默认值为0
 		.shadowColor		--设定阴影的颜色，默认是全透明的黑色
+
 
 12、填充规则：		
 		.fill(【"nonzero"|"evenodd"】)			
@@ -89,6 +105,7 @@
 			即在平面内的任何一点P，引出一条射线，注意不要经过多边形的顶点，若与该射线相交的多边形边的数目为奇数，则p是多边形内部点，否则是外部点。
 	额外注意：
 		同一闭合图形分别在运用"非零环绕数规则"和"奇-偶规则"时，可能得到的结果不同。
+
 
 13、绘制文本：
 		.fillText(text,x,y【,maxWidth】)
@@ -122,7 +139,8 @@
 		.direction		--设置文本方向，其值可设为ltr/rtl/inhert
 
 		.measureText(text)	--返回一个text设定的TextMetrics对象
-							
+		
+					
 14、使用图像：
 		1）引入图像到canvas里需要两步基本操作，
 			1> 获得一个图片的源
@@ -144,4 +162,52 @@
 
 		6）切片使用
 			.drawIamge(image,sx,sy,swidth,sheight,dx,dy,dWidth,dHeight)    --将指定图片先切片，后放置，前4个是定义图像源的切片位置和大小，后4个则是定义切片的目标显示位置和大小
-							
+
+
+15、变形：	
+		1）.save()/.restore()	--保存/恢复canvas状态，可多次调用，存储的数据结构是栈结构
+
+		2）canvas状态指的是当前画面应用的所有样式和变形的一个快照，具体指：
+			·应用的变形(移动、旋转和缩放)
+			·strokeStyle,fillStyle,globalAlpha,lineWidth,lineStyle,lineCap,lineJoin,miterLimit,shadowOffsetX,shadowOffsetY,shadowBlur,shadowColor,globalCompositeOperation的值
+			·当前的裁切路径，即clip
+
+		3）.translate(x,y)	--将当前坐标原点向x轴y轴方向移动
+		
+		4）.rotate(angle)	--将当前坐标轴顺时针旋转angle度
+
+		5）.scale(xV,yV)	--将当前坐标轴进行缩放
+
+		6）.transform(m11,m12,m21,m22,dx,dy)
+					--将当前的变形矩阵乘上一个基于自身参数的矩阵
+
+		   .setTransform(m11,m12,m21,m22,dx,dy)
+					--先将当前的变形矩阵重置为单位矩阵，然后再用相同的参数调用transform方法
+
+		   .resetTransform()	--重置当前变形为单位矩阵
+
+16、合成：(未完成)	
+		.globalCompositeOperation
+					--要在绘制新图形时应用的合成操作的类型
+						----source-over		新图形将绘制在原图形之上
+						----destination-over	原图形将绘制在新图形之上
+						----source-atop		新图形中那与原图形重叠的区域将绘制在原图形之上，但新图形中非重叠部分将会被舍去
+						----destination-atop	原图形中那与新图形重叠的区域将绘制在新图形之上，但原图形中非重叠部分将会被舍去
+						----source-in		保留新图形中与原图形重叠的那部分，但新图形中非重叠部分、原图形将会被舍去
+						----destination-in	保留原图形中与新图形重叠的那部分，但原图形中非重叠部分、新图形将会被舍去
+						----source-out		保留新图形中与原图形非重叠的那部分，但新图形中重叠部分、原图形将会被舍去
+						----destination-out	保留原图形中与新图形非重叠的那部分，但原图形中重叠部分、新图形将会被舍去
+						----lighter		除去新图形与原图形重叠的那部分，新图形、原图形其他部分保留及绘制
+						----copy		只绘制新图形，删除原图形
+						----xor			只绘制出新图形与原图形非重叠部分，重叠部分变透明
+
+17、裁剪：	
+		.clip()			--按照路径进行裁剪，之后绘制的新图形只会在这个路径中对原图形进行覆盖，这个效果一直持续，只能通过save & restore来恢复
+	补充说明：
+		clip会以上一个beginPath()后面所绘的所有路径进行一个切割，即使你已经对这些路径进行过操作（如fill）。
+
+18、动画：
+		window.requestAnimationFrame(callback)
+					--绘制动画帧，返回值为动画id
+		window.cancelAnimationFrame(id)
+					--根据动画id停止动画
