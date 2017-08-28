@@ -8,7 +8,7 @@
 
 
 4、绘制矩形：	
-		.fillRect(px,py,w,h)	--填充矩形区域
+		.fillRect(px,py,w,h)		--填充矩形区域
 		.strokeRect(px,py,w,h)	--绘制矩形边框
 		.clearRect(px,py,w,h)	--去除矩形区域，背景为透明
 
@@ -16,7 +16,7 @@
 5、绘制路径：	
 		.beginPath()		--开启新的路径列表，清空原有的路径列表。在调用beginPath()或canvas刚建的时候，第一条路径构造命令通常被视为moveTo()，所以干脆养成在这句之后使用.moveTo(px,py)设置路径起始点
 		.closePath()		--创建一条从当前点到起始点的路径，闭合路径之后，又重新回到上下文中
-		.stroke()		--用线描绘路径列表，但是不会自动闭合路径
+		.stroke()			--用线描绘路径列表，但是不会自动闭合路径
 		.fill()			--自动闭合路径列表中的路径，然后填充闭合图形
 
 		.moveTo(px,py)		--移动笔触，到指定的坐标
@@ -31,18 +31,18 @@
 		.bezierCurveTo(x1,y1,x2,y2,x3,y3)
 					--三次贝塞尔曲线，P1为控制点1，P2为控制点2，P3为结束点
 
-		.rect(x,y,width,height)	--绘制一个左上角坐标为(x,y)，宽高为width和height的矩形，但是注意，执行该方法会使当前笔触自动重置会默认坐标到(0,0)
+		.rect(x,y,width,height)	--绘制一个左上角坐标为(x,y)，宽高为width和height的矩形路径，但是注意，执行该方法会使当前笔触自动重置会默认坐标到(0,0)
 
-		.isPointInPath(x,y)	--如果指定的点位于当前路径中，则返回true，否则返回false
+		.isPointInPath(x,y)		--如果指定的点位于当前路径中，则返回true，否则返回false
 
 6、Path2D对象：	
 		new Path2D()		--会返回一个空的Path对象
-		new Path2D(path)	--克隆Path对象
+		new Path2D(path)		--克隆Path对象
 		new Path2D(d)		--从SVG建立Path对象
 
 
 7、色彩：	
-		.fillStyle		--设置图形的填充颜色
+		.fillStyle			--设置图形的填充颜色
 		.strokeStyle		--设置图形的轮廓颜色
 
 		.globalAlpha		--设置透明度，注意透明叠加情形
@@ -50,14 +50,14 @@
 
 8、线型：	
 		.lineWidth		--设置线条宽度，数值，不能带单位
-		.lineCap		--设置线条末端样式
-						----butt	线段末端以方形结束
+		.lineCap			--设置线条末端样式
+						----butt		线段末端以方形结束
 						----round	线段末端以圆形结束，但是增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
 						----square	线段末端以方形结束，但是增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
-		.lineJoin		--设置线条与线条间接合处的样式
-						----miter	默认值，填充一个额外的菱形区域
+		.lineJoin			--设置线条与线条间接合处的样式
+						----miter		默认值，填充一个额外的菱形区域
 						----round	把原先菱形区域的外侧尖角磨圆了的样式
-						----bevel	把原先菱形区域的尖角切去的样式
+						----bevel		把原先菱形区域的尖角切去的样式
 		.miterLimit		--限制当两条线相交时交接处最大长度，所谓交接处长度是指线条交接处内角顶点到外角顶点的长度
 		.setLineDash(<arr>)	--设置当前虚线样式，其中arr为数组，其中奇项为实线长，偶项为虚线长，整个为虚线的虚实循环规律
 		.getLineDash()		--返回一个包含当前虚线样式，长度为非负偶数的数组
@@ -132,9 +132,9 @@
 						----top		  文本基线是em方框的顶端
 						----hanging	  文本基线是悬挂基线
 						----middle	  文本基线是em方框的正中
-						----alphabetic    默认，文本基线是普通的字母基线
-						----ideographic   文本基线是表意基线
-						----bottom        文本基线是em方框的底端
+						----alphabetic    	  默认，文本基线是普通的字母基线
+						----ideographic   	  文本基线是表意基线
+						----bottom        	  文本基线是em方框的底端
 
 		.direction		--设置文本方向，其值可设为ltr/rtl/inhert
 
